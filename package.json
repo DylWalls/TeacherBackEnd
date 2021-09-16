@@ -1,0 +1,28 @@
+{
+  "name": "teacherbackend",
+  "version": "1.0.0",
+  "description": "Capstone for LittleTots. BackEnd for Teacher side of App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DylWalls/TeacherBackEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DylWalls/TeacherBackEnd/issues"
+  },
+  "homepage": "https://github.com/DylWalls/TeacherBackEnd#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.6",
+    "nodemon": "^2.0.12"
+  }
+}
