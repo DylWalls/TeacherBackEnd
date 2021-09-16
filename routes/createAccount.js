@@ -1,18 +1,18 @@
-const User = require('../models/usercreation');
+const {User, validateUser } = require('../models/usercreation');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 
 
-//Creating a New User(Register)
+//Creating a New User(Teacher Register)
 router.post('/', async (req, res) => {
     try {
-    const { error } = validateUser(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    
+
     let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send('User already registered.');
+      if (user) return res.status(400).send('User already registered.');
     
     const salt = await bcrypt.genSalt(10)
         user = new User({
