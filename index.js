@@ -1,12 +1,19 @@
 const connectDB = require('./startup/db');
 const express = require('express');
 const app = express();
-const User = require('./models/usercreation');
+const cors = require('cors');
+
+//Routes go here
+const authUser = require('./routes/authUser');
+const user = require('./models/userCreation');
 
 connectDB();
 
+app.use(cors());
 app.use(express.json());
-app.use('/api/users', User);
+app.use('/api/users', user);
+app.use('/api/authUser', authUser);
+//API endpoint
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

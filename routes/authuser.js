@@ -1,10 +1,10 @@
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const express = require('express');
-const { User } = require('../models/usercreation');
+const { User } = require('../models/userCreation');
 const router = express.Router();
 
-
+// Log in validation
 router.post('/', async (req, res) => {
     try {
         const { error } = validateLogin(req.body);
@@ -24,15 +24,14 @@ router.post('/', async (req, res) => {
     }
    });
 
-
+// LogIn Cred. Check
 function validateLogin(req) {
     const schema = Joi.object({
         email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(5).max(1024).required(),
     });
     return schema.validate(req);
-   }
-
+}
 
 
    module.exports = router;
