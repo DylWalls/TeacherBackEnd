@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
-   });
+});
 
 // LogIn Cred. Check
 function validateLogin(req) {

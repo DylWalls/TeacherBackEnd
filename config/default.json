@@ -1,4 +1,4 @@
 {
     "mongoURI": "mongodb+srv://Dylan:j9H4VCZwOmSmyrKK@TinyTotsTeacher.x3s6s.mongodb.net/TinyTots?retryWrites=true&w=majority",
-    "jwtSecret": "JWT SECRET HERE"
+    "jwtSecret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQzZTY1ZjA5NDAyODNkM2NlOGViMzUiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjMxODM5ODY2fQ.06tpA_R90xmIaX0Kz5j8DTiZU7SaRh3nHFkFx8rxatk"
 }
