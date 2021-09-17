@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const express = require('express');
-const { User } = require('../models/userCreation');
+const { User } = require('../models/user');
 const router = express.Router();
 
 // Log in validation

@@ -1,10 +1,22 @@
-const {User, validateUser } = require('../models/userCreation');
+const { User, validateUser } = require('../models/user');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const auth = require('../middleware/auth');
-const admin = require('../middleware/admin');
 
+
+// Get ALL Users
+router.get("/", async(req, res)=>{
+    try{
+        const user = await User.find();
+
+        return res
+        .send(user);
+    } catch(ex){
+        return res.status(500).send(`Internal Server Error:${ex}`);
+    }
+});
 
 
 //Creating a New User(Teacher Register)

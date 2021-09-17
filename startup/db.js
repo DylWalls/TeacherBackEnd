@@ -5,7 +5,7 @@ function connectDB(){
 mongoose
     .connect(
         config.get('mongoURI'),
-    { useNewUrlParser: true, useUnifiedTopology: true })
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => console.log('Connected to MongoDB...'))
     .catch((err) => {
         console.log(`Could not connect to MongoDB. ERROR: ${err}`);

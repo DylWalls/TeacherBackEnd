@@ -32,6 +32,6 @@ function validateUser(user) {
 }
   
 
-exports.User = User;
-exports.validateUser = validateUser;
-exports.userSchema = userSchema;
+module.exports.User = User;
+module.exports.validateUser = validateUser;
+module.exports.userSchema = userSchema;

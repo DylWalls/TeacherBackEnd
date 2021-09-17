@@ -5,13 +5,13 @@ const cors = require('cors');
 
 //Routes go here
 const authUser = require('./routes/authUser');
-const user = require('./models/userCreation');
+const users = require('./routes/createAccount');
 
 connectDB();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/users', user);
+app.use('/api/users', users);
 app.use('/api/authUser', authUser);
 //API endpoint
 
