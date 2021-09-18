@@ -1,4 +1,4 @@
 {
     "mongoURI": "mongodb+srv://Dylan:j9H4VCZwOmSmyrKK@TinyTotsTeacher.x3s6s.mongodb.net/TinyTots?retryWrites=true&w=majority",
-    "jwtSecret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQzZTY1ZjA5NDAyODNkM2NlOGViMzUiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjMxODM5ODY2fQ.06tpA_R90xmIaX0Kz5j8DTiZU7SaRh3nHFkFx8rxatk"
+    "jwtSecret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ1MjlkOGEyMDRhNjVkNWMxZWUwZTQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjMxOTIyNjczfQ.wBpm2CgchUyDCNYEUBi0AMkWi0R-WCw6IseDIdZ4-Cw"
 }
