@@ -18,6 +18,19 @@ router.get("/", async(req, res)=>{
     }
 });
 
+//Get User by ID(TeacherID)
+router.get('/:userId', async(req,res)=>{
+    try{
+        const users = await User.findById(req.params.userId);
+        if (!users) return res.status(400).send(`The User with ID of "${req.params.user}" does not exist.`);
+        
+        return res
+        .send(users);
+    } catch(ex){
+        return res.status(500).send(`Internal Server Error:${ex}`);
+    }
+})
+
 
 //Creating a New User(Teacher Register)
 router.post("/", async (req, res) => {
@@ -47,18 +60,18 @@ router.post("/", async (req, res) => {
     }
 });
 
-// Updating User Account
+// Updating User Account  
 router.put("/:userId", auth, async (req, res) =>{
     try {
         const { error } = validateUser(req.body);
             if (error) return res.status(400).send(error);
 
-        // const salt = await bcrypt.genSalt(10);
+            const salt = await bcrypt.genSalt(10)
         let user = await User.findByIdAndUpdate(req.params.userId,{
             email: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            // password: await bcrypt.hash(req.body.password, salt),
+            password: await bcrypt.hash(req.body.password, salt),
         },
             {new: true}
         );

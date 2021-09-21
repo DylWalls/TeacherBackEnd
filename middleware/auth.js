@@ -3,7 +3,21 @@ const config = require("config");
 
 
 
-function auth(req, res) {
+// function auth(req, res) {
+
+//   const token = req.header("x-auth-token");
+//   if (!token) return res.status(401).send("Access denied. No token provided.");
+
+//   try {
+//     const decoded = jwt.verify(token, config.get("jwtSecret"));
+//     req.user = decoded;
+//     return res.send(token);
+//   } catch (ex) {
+//      return res.status(400).send("Invalid token.");
+//   }
+// }
+
+function auth(req, res, next) {
 
   const token = req.header("x-auth-token");
   if (!token) return res.status(401).send("Access denied. No token provided.");
@@ -11,12 +25,11 @@ function auth(req, res) {
   try {
     const decoded = jwt.verify(token, config.get("jwtSecret"));
     req.user = decoded;
-    return res.send(token);
+    return next();
   } catch (ex) {
      return res.status(400).send("Invalid token.");
   }
 }
-
 
 
 
