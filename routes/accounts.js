@@ -1,4 +1,4 @@
-const { User, validateUser } = require('../models/user');
+const { User, validateUser, Child, validateChild, Activity, validateActivity} = require('../models/user');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const express = require('express');
@@ -104,4 +104,63 @@ router.delete('/:userId', auth, async (req, res) => {
     }
 });
 
+
+//Child Routes
+
+//Get Entire Classroom
+router.get("/:userId/children", async (req, res)=>{
+
+    try {
+        const child = await Child.find();
+        return res.send(child);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
+//Adding Children to TeacherClassroom
+router.post("/:userId/children", async(req, res)=>{
+    try {
+        const user = await User.findById(req.params.userId);
+        if(!user)
+            return res
+                .status(400)
+                .send(`The User with Id of "${req.params.userId}" does not exist.`);
+                let child = new Child({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    allergies: req.body.allergies,
+                   glasses: req.body.glasses,
+                   stock: req.body.stock
+                });
+        user.children.push(child);
+        await user.save();
+        return res.send(user.children);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
+//Deleting a Child from Teacher
+router.delete("/:userId/children/:childrenId", async (req, res) => {
+    try {
+      const user = await User.findById(req.params.userId);
+      if (!user)
+        return res
+          .status(400)
+          .send(`The user with id "${req.params.userId}" does not exist.`);
+      let children = user.children.id(req.params.childrenId);
+      if (!children)
+        return res
+          .status(400)
+          .send(
+            `The Child with id of "${req.params.childrenId}" does not exist.`
+          );
+      children = await children.remove();
+      await user.save();
+      return res.send(children);
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+  }); 
 module.exports = router;
