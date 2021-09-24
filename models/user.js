@@ -12,15 +12,6 @@ const childsSchema = new mongoose.Schema({
     stock: {type: Array, required: true}
 });
 
-const userSchema = new mongoose.Schema({
-    email: { type: String, unique: true, required: true, minlength: 5, maxlength: 255 },
-    firstName:  { type: String, required: true, minlength: 2, maxlength: 50 },
-    lastName:  { type: String, required: true, minlength: 2, maxlength: 50 },
-    password: { type: String, required: true, minlength: 5, maxlength: 1024 },
-    isAdmin: {type: Boolean, default: false},
-    children: {type : [childsSchema], default: []},
-});
-
 const actSchema = new mongoose.Schema({
     eventName:{type: String, required: true},
     date:{type: Array, required:true},
@@ -28,6 +19,17 @@ const actSchema = new mongoose.Schema({
     eventAct:{type: String, required: true}
 
 })
+
+const userSchema = new mongoose.Schema({
+    email: { type: String, unique: true, required: true, minlength: 5, maxlength: 255 },
+    firstName:  { type: String, required: true, minlength: 2, maxlength: 50 },
+    lastName:  { type: String, required: true, minlength: 2, maxlength: 50 },
+    password: { type: String, required: true, minlength: 5, maxlength: 1024 },
+    isAdmin: {type: Boolean, default: false},
+    children: {type : [childsSchema], default: []},
+    activities: {type: [actSchema], default: []}
+});
+
 
 userSchema.methods.generateAuthToken = function () {
     return jwt.sign({ _id: this._id, name: this.userName , isAdmin: this.isAdmin}, config.get('jwtSecret'));

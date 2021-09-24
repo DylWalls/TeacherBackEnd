@@ -163,4 +163,97 @@ router.delete("/:userId/children/:childrenId", async (req, res) => {
       return res.status(500).send(`Internal Server Error: ${ex}`);
     }
   }); 
+
+
+// Routes for Activities
+
+//Get Activity
+router.get("/:userId/activities/:activitiesId", async (req, res)=>{
+
+    try {
+        const activity = await Activity.find();
+        return res.send(activity);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
+//Creating Activity
+router.post("/:userId/activities", async(req, res)=>{
+    try {
+        const user = await User.findById(req.params.userId);
+        if(!user)
+            return res
+                .status(400)
+                .send(`The User with Id of "${req.params.userId}" does not exist.`);
+            let activity = new Activity({
+                eventName: req.body.eventName,
+                date: req.body.date,
+                location: req.body.location,
+                eventAct: req.body.eventAct,
+            });
+        user.activities.push(activity);
+        await user.save();
+        return res.send(activity);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
+//Updating activity
+router.put("/:userId/activities/:activitiesId", async (req, res) =>{
+    try {
+        const { error } = validateActivity(req.body);
+            if (error) return res.status(400).send(error);
+
+        const user = await User.findById(req.params.userId);
+        if (!user)
+          return res
+            .status(400)
+            .send(`The user with id "${req.params.userId}" does not exist.`);    
+
+        let activity = user.activities.findByIdAndUpdate(req.params.activitiesId,{
+            eventName: req.body.eventName,
+            date: req.body.date,
+            location: req.body.location,
+            eventAct: req.body.eventAct,
+        },
+            {new: true}
+        );
+        if (!activity)
+        return res
+            .status(400)
+            .send(`The Activity with ID of "${req.params.activitiesId}" does not exist`);
+        await user.save();
+        } catch (ex) {
+            return res.status(500).send(`Internal Server Error: ${ex}`);
+        }
+});
+//Delete Activity
+router.delete("/:userId/activities/:activitiesId", async (req, res) => {
+    try {
+      const user = await User.findById(req.params.userId);
+      if (!user)
+        return res
+          .status(400)
+          .send(`The user with id "${req.params.userId}" does not exist.`);
+      
+          let activity = user.activities.id(req.params.activitiesId);
+      if (!activity)
+        return res
+          .status(400)
+          .send(
+            `The Activity with id of "${req.params.activitiesId}" does not exist.` 
+        );
+
+        activity = await activity.remove();
+        await user.save();
+        return res.send(activity);
+    } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+  }); 
+
+
+
 module.exports = router;
