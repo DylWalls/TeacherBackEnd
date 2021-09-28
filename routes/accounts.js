@@ -111,8 +111,9 @@ router.delete('/:userId', auth, async (req, res) => {
 router.get("/:userId/children", async (req, res)=>{
 
     try {
-        const child = await Child.find();
-        return res.send(child);
+        const user = await User.findById(req.params.userId);
+
+        return res.send(user.children);
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
@@ -211,15 +212,35 @@ router.put("/:userId/activities/:activitiesId", async (req, res) =>{
           return res
             .status(400)
             .send(`The user with id "${req.params.userId}" does not exist.`);    
+        db.activities.update(
+            {
+                "_id": "_id"
+            },
+            {
+            "$set":{
+                "activities.$[elemX].value": "value"
 
-        let activity = user.activities.findByIdAndUpdate(req.params.activitiesId,{
-            eventName: req.body.eventName,
-            date: req.body.date,
-            location: req.body.location,
-            eventAct: req.body.eventAct,
-        },
-            {new: true}
-        );
+                },
+            },
+            {
+                "arrayFilters":[
+                    {
+                        "elemX.eventName": "eventName",
+                        "elemX.date": "date",
+                        "elemX.location": "location",
+                        "elemX.eventAct": "eventAct"
+                    }
+                ]
+            }
+        )
+        // let activity = user.activities.update(req.params.activitiesId,{
+        //     eventName: req.body.eventName,
+        //     date: req.body.date,
+        //     location: req.body.location,
+        //     eventAct: req.body.eventAct,
+        // },
+        //     {new: true}
+        // );
         if (!activity)
         return res
             .status(400)
